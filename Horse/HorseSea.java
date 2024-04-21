@@ -3,7 +3,7 @@ import java.awt.event.*;
 import javax.swing.*;
 public class HorseSea extends GameHorse {
       private int color;
-      private int ID,rank=des.No_Rank;
+      private int ID,rank=Des.No_Rank;
       private int location; //vị trí cá ngựa trong mảng
       private JLabel label =new JLabel();
       static final int Finish_Location =56;
@@ -47,7 +47,7 @@ public class HorseSea extends GameHorse {
       public void toFinish() {
     	  location= Finish_Location;
       }
-      public boolean ChangeRank(des des,int scores) {
+      public boolean ChangeRank(Des des,int scores) {
     	  if(des.setdes(rank, scores,this)) {
     		  return true;
     	  }
