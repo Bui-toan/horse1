@@ -1,6 +1,7 @@
 package Horse;
-import java.util.concurrent.Semaphore;
 import javax.swing.JOptionPane;
+import java.util.concurrent.Semaphore;
+
 public class GameHorse {
       static final int RED=1;
       static final int YELLOW=2;
@@ -9,7 +10,7 @@ public class GameHorse {
       static final int DISTANCES=50;
       
       static boolean ThrowPhaseFlag=true; //tung xúc sắc
-      static boolean HorseFLAG=false;   // đi cá ngựa
+      static boolean HorseFLAG =false;   // đi cá ngựa
       static Semaphore throwFlagSema =new Semaphore(0);
       static Semaphore HorseFlagSema= new Semaphore(0);
       public void Error(String error) {
