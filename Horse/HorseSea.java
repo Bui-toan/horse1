@@ -1,6 +1,8 @@
 package Horse;
 import java.awt.event.*;
 import javax.swing.*;
+
+import Horse.GameMap;
 public class HorseSea extends GameHorse {
       private int color;
       private int ID,rank=Des.No_Rank;
@@ -47,6 +49,17 @@ public class HorseSea extends GameHorse {
       public void toFinish() {
     	  location= Finish_Location;
       }
+      public boolean move(GameMap map, int steps) {
+  		if (map.setMap(color, ID, location, steps)) {
+  			if (location !=Finish_Location) {
+  				location = (location + steps) % GameMap.NUMBER_NODE;
+  			}
+
+  			return true;
+  		}
+
+  		return false;
+  	}
       public boolean ChangeRank(Des des,int scores) {
     	  if(des.setdes(rank, scores,this)) {
     		  return true;
@@ -60,6 +73,26 @@ public class HorseSea extends GameHorse {
       public void setIcon(final Icon icon[]) {
     	  label.setIcon(icon[color]);
       }
+      public void addMouseListener(GameMap map, int steps) {
+  		if (label != null) {
+  			label.addMouseListener(new MouseAdapter() {
+  				@Override
+  				public void mouseClicked(MouseEvent e) {
+  					if (HorseFLAG) {
+  						if (location==Finish_Location) {
+  							if(ChangeRank(map.getPlayer()[color].des, steps)){
+  								HorseFLAG = false;
+  								HorseFlagSema.release();
+  							}
+  						} else if (move(map, steps)) {
+  							HorseFLAG = false;
+							HorseFlagSema.release();
+  						}
+  					}
+  				}
+  			});
+  		}
+  	}
       public void RemoveMouseListener() {
   		if (label != null) {
   			MouseListener list[] = label.getMouseListeners();
@@ -68,5 +101,8 @@ public class HorseSea extends GameHorse {
   			}
   		}
   	}
+    
+}
+
     
 }
