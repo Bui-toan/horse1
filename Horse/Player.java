@@ -1,7 +1,4 @@
 package Horse;
-
-import Horse.GameMap;
-
 public class Player extends GameHorse {
       int color;
       static final int Horse=4;
@@ -32,6 +29,12 @@ public class Player extends GameHorse {
   			}	
   		}
   	}
+
+  	public  boolean isWin(){
+  		return des.isWin();
+  	}
+  }
+
 
   	public  boolean isWin(){
   		return des.isWin();
