@@ -37,6 +37,7 @@ public class HorseBarn extends GameHorse {
       }
 }
 
+
       public boolean isEmpty() {
     	  return NumberHorse==0;
       }
