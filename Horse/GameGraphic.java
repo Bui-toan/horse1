@@ -10,24 +10,27 @@ public class GameGraphic extends GameHorse{
 	static final int W_FRAME=1000;
 	static final int H_FRAME=800;
 	
-	static final int x0_position = 290;
-	static final int y0_position = 10;
+	static final int x0_position = 335	;
+	static final int y0_position = 20;
 
 	/* Các tọa độ cơ sở của chuồng, đích đến */
 	static final Coordinates baseStableCoor[] = {null};
-	static final Coordinates baseDestinationCoor[] = {null, new Coordinates (x0_position+DISTANCES , y0_position + DISTANCES),
+	static final Coordinates baseDestinationCoor[] = {null, new Coordinates (x0_position + DISTANCES , y0_position + DISTANCES),
 	                                                 new Coordinates (x0_position - 5 * DISTANCES, y0_position + 7 * DISTANCES),
 	                                                 new Coordinates (x0_position + DISTANCES, y0_position + 13 * DISTANCES),
 	                                                 new Coordinates (x0_position + 7 * DISTANCES, y0_position + 7 * DISTANCES)
 	                                                };
 	private JPanel mapPanel;
-	private JPanel controlPanel;
+	private JPanel controlPanel,control;
 	private JFrame mainFrame;
 	private JButton xuatQuanButton, dropButton;
 
 	private Icon iconDie[], iconHorse[];
-	private Image imMap, imControl;
+	private Image imMap;
 	private JLabel labelDie, turnLabel;
+	
+	GameMap map;
+	String time1;
 
 	void prepareDie() {
 		final int numberSide = 7;
@@ -48,15 +51,9 @@ public class GameGraphic extends GameHorse{
 		imMap = new ImageIcon(getClass().getResource("co_ca_ngua.png")).getImage();
 	}
 
-	void prepareControl() {
-		imControl = new ImageIcon(getClass().getResource("h3ttnt.jpg")).getImage();
-	}
-
 	GameGraphic() {
 		mainFrame = new JFrame();
 		mainFrame.setSize(W_FRAME, H_FRAME);
-//		mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-//		mainFrame.setUndecorated(true);
 		mainFrame.setTitle("Cờ Cá Ngựa");
 		mainFrame.setLocationRelativeTo(null);
 		mainFrame.setResizable(false);
@@ -69,7 +66,6 @@ public class GameGraphic extends GameHorse{
 		});
 
 		prepareMap();
-		prepareControl();
 		prepareHorse();
 		prepareDie();
 	}
@@ -134,7 +130,7 @@ public class GameGraphic extends GameHorse{
 
 	public void drawDie() {
 		labelDie = new JLabel(iconDie[0]);
-		controlPanel.add(labelDie);
+		control.add(labelDie);
 		mainFrame.setVisible(true);
 	}
 
@@ -149,7 +145,7 @@ public class GameGraphic extends GameHorse{
 
 			public void run() {
 				/* Tạo hiệu ứng tung xúc xắc */
-				for (int i = 1; i < 15; i++) {
+				for (int i = 1; i < 10; i++) {
 					dice.ThrowDice();
 					labelDie.setIcon(iconDie[dice.getScores()]);
 					sleep(100);
@@ -161,6 +157,9 @@ public class GameGraphic extends GameHorse{
 		}
 
 		JButton throwButton = new JButton("Đổ");
+		throwButton.setBackground(Color.gray);
+		Font font= new Font("Arial",Font.BOLD,30);
+		throwButton.setFont(font);
 
 		throwButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -172,21 +171,22 @@ public class GameGraphic extends GameHorse{
 			}
 		});
 
-		controlPanel.add(throwButton);
+		control.add(throwButton);
 		mainFrame.setVisible(true);
 	}
-
+	
 	public void drawTime() {
 		class DigitalWatch implements Runnable {
 			Thread thread = null;
 			Date startTime = null;
 			String timeString = "";
 			JButton button;
+			
 
 			DigitalWatch() {
 				thread = new Thread(this);
 				button = new JButton();
-				controlPanel.add(button);
+				control.add(button);
 				thread.start();
 				mainFrame.setVisible(true);
 			}
@@ -220,6 +220,7 @@ public class GameGraphic extends GameHorse{
 
 					printTime();					
 					sleep(1000);
+					
 				}
 			}
 
@@ -230,11 +231,6 @@ public class GameGraphic extends GameHorse{
 
 		new DigitalWatch();
 	}
-
-	public void drawStable(HorseBarn stable) {
-
-	}
-
 	public void drawDropButton() {
 		dropButton = new JButton("Bỏ lượt");
 
@@ -248,7 +244,7 @@ public class GameGraphic extends GameHorse{
 			}
 		});
 
-		controlPanel.add(dropButton);
+		control.add(dropButton);
 		mainFrame.setVisible(true);
 	}
 
@@ -270,7 +266,7 @@ public class GameGraphic extends GameHorse{
 				}
 			}
 		});
-		controlPanel.add(xuatQuanButton);
+		control.add(xuatQuanButton);
 		mainFrame.setVisible(true);
 	}
 
@@ -284,40 +280,84 @@ public class GameGraphic extends GameHorse{
 	public void drawTurnLabel() {
 		turnLabel = new JLabel("");
 		turnLabel.setOpaque(true);
-		controlPanel.add(turnLabel);
+		control.add(turnLabel);
 	}
 
-	@SuppressWarnings("serial")
-	public void drawControl(RandomDice die) {
-		controlPanel = new JPanel() {
-			@Override
-			public void paintComponent(Graphics g) {
-				super.paintComponent(g);
-				g.drawImage(imControl, 0, 100, W_FRAME - (W_FRAME - 215), H_FRAME - 15 - 100 + 35 - 8, this); //ve nen
-			}
-		};
-		mainFrame.add(controlPanel);
 
+	public void drawname() {
+        JPanel jp2=new JPanel();
+    	JLabel name= new JLabel("  Chúc các bạn chơi game vui vẻ!");
+    	Font font=new Font("Arrial",Font.BOLD,15);
+    	name.setFont(font);
+    	name.setForeground(Color.RED);
+    	jp2.add(name);
+    	jp2.setPreferredSize(new Dimension(215,100));
+    	jp2.setLayout(new GridLayout());
+    	controlPanel.add(jp2,BorderLayout.SOUTH);
+    	mainFrame.setVisible(true);
+    	
+ 
+    }
+    public void drawhistory(){
+    	JPanel history=new JPanel();
+    	JLabel ls=new JLabel("  Lịch sử trò chơi  ");
+    	
+    	history.setLayout(new BorderLayout());
+    	JLabel time = new JLabel("Thời gian : ");
+    	
+    	JLabel color= new JLabel("Người chơi màu ");
+    	
+    	
+    	
+    	Font font=new Font("Arrial",Font.BOLD,20);
+    	ls.setFont(font);
+    	
+    	history.add(ls,BorderLayout.NORTH);
+    	history.add(time,BorderLayout.CENTER);
+    	history.add(color,BorderLayout.SOUTH);
+    	history.setPreferredSize(new Dimension(200,50));
+    	controlPanel.add(history,BorderLayout.CENTER);
+    	mainFrame.setVisible(true);
+    	
+    	
+    }
+	public void drawControl(RandomDice dice) {
+		controlPanel=new JPanel();
+		controlPanel.setLayout(new BorderLayout());
+		controlPanel.setPreferredSize(new Dimension(200,H_FRAME));
+		control=new JPanel();
+		control.setLayout(new FlowLayout());
+		control.setPreferredSize(new Dimension(200,120));
 		drawTurnLabel();
 		drawDie();
-		drawThrowButton(die);
+		drawThrowButton(dice);
 		drawDropButton();
 		drawTime();
-
+		
+		
+		controlPanel.add(control,BorderLayout.NORTH);
+		drawhistory();
+		drawname();
+		
+		mainFrame.add(controlPanel);
 		mainFrame.setVisible(true);
 	}
 
+	@SuppressWarnings("serial")
 	public void drawMap(GameMap map) {
-		mapPanel = new JPanel() {
+		mapPanel = new JPanel()
+		{
 			@Override
 			public void paintComponent(Graphics g) {
 				super.paintComponent(g);
-				g.drawImage(imMap, 0, 0, W_FRAME - 215, H_FRAME - 15, this); //ve nen
+				g.drawImage(imMap, 0, 0, W_FRAME - 200, H_FRAME - 15, this); //ve nen
 			}
 		};
-		mapPanel.setPreferredSize(new Dimension(W_FRAME - 215, H_FRAME - 15));
-		mapPanel.setLayout(null);
 
+		mapPanel.setPreferredSize(new Dimension(W_FRAME - 200, H_FRAME - 15));
+	   
+		mapPanel.setLayout(null);
+		     
 		int num = map.getNumberPlayer();
 		for (int i = 1; i <= num; i++) {
 			for (int j = 0; j < Player.Horse; j++) {
@@ -329,5 +369,6 @@ public class GameGraphic extends GameHorse{
 
 		mainFrame.add(mapPanel, BorderLayout.WEST);
 		mainFrame.setVisible(true);
+		
 	}
-}
+
