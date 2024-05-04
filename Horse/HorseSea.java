@@ -1,8 +1,6 @@
 package Horse;
 import java.awt.event.*;
 import javax.swing.*;
-
-import Horse.GameMap;
 public class HorseSea extends GameHorse {
       private int color;
       private int ID,rank=Des.No_Rank;
@@ -16,13 +14,13 @@ public class HorseSea extends GameHorse {
     	  
           switch(color) {//vị trí xuất quân
           case RED:
-    	      location=0;
-    	      break;
-          case YELLOW:
     	      location=42;
     	      break;
+          case YELLOW:
+    	      location=14;
+    	      break;
           case BLUE:
-	          location=14;
+	          location=0;
 	          break;
           case GREEN:
     	      location=28;
@@ -101,6 +99,10 @@ public class HorseSea extends GameHorse {
   			}
   		}
   	}
+    
+}
+
+
     
 }
 
