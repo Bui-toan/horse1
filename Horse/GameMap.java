@@ -1,8 +1,6 @@
 package Horse;
 
-import Horse.Des;
-import Horse.Player;
-import Horse.HorseBarn;
+import javax.swing.JOptionPane;
 
 public class GameMap extends GameHorse {
 	private Player player[];
@@ -12,18 +10,29 @@ public class GameMap extends GameHorse {
 	private final int NO_HORSE = 0;
 	/* Vị trí đích đến của các quân cờ */
 	private final int DES[] = { -1, 55, 13, 27, 41};
-	private final int START[] = { -1, 0, 14, 28, 42};// Can sua gia tri 48 thanh 0
+	private final int START[] = { -1, 0, 14, 28, 42};
 	private int numberPlayer;
 
 	GameMap() {
-		numberPlayer = 4;
+		numberPlayer = numberplayer();
 		player = new Player[numberPlayer + 1];
 
 		for (int color = 1; color <= numberPlayer; color++) {
 			player[color] = new Player(color);
 		}
 	}
-
+    public int numberplayer() {
+    	int n;
+    	while(true) {
+    		 n=Integer.parseInt(JOptionPane.showInputDialog(null, "Nhập số người chơi (1/2/3/4) : ", JOptionPane.INFORMATION_MESSAGE)); 
+        	if (n>=1 && n<=4) {
+    		     break;
+    		} else {
+    			Error("Bạn nhập sai số player. Xin mời nhập lại.");
+    		}
+    	}
+    	return n;
+    }
 	public int getNumberPlayer() {
 		return numberPlayer;
 	}
@@ -110,7 +119,7 @@ public class GameMap extends GameHorse {
 
 		return true;
 	}
-
+	
 	public boolean isWin() {
 		for (int i = 1; i <= numberPlayer; i++) {
 			if(player[i].isWin()){
@@ -122,3 +131,4 @@ public class GameMap extends GameHorse {
 		return false;
 	}
 }
+
