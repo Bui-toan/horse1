@@ -10,28 +10,28 @@ public class GameSession extends GameHorse {
 	private GameMap map;
 	private boolean endGameFlag;
 	private GameGraphic graphic;
-	private RandomDice die;
+	private RandomDice dice;
 
 	GameSession() {
-		setTurn();
+		
 		map = new GameMap();
-		die = new RandomDice();
+		setTurn();
+		dice = new RandomDice();
 		graphic = new GameGraphic();
 		graphic.drawMap(map);
-		graphic.drawControl(die);
+		graphic.drawControl(dice);
 
 		endGameFlag = false;
 	}
 
 	public void setTurn() {
 		while (true) {
-			String strTurn = JOptionPane.showInputDialog(null, "Nhập player đi trước (1/ 2/ 3/ 4): ", JOptionPane.INFORMATION_MESSAGE);
-
-			if (strTurn.matches("[1234]")) {
-				turn = Integer.parseInt(strTurn);
+			 turn = Integer.parseInt(JOptionPane.showInputDialog(null, "Nhập player đi trước (1/ 2/ 3/ 4): ", JOptionPane.INFORMATION_MESSAGE));		 
+			if (turn >= 1 && turn <= 4 && turn <= map.getNumberPlayer()) {
 				break;
-			} else {
-				Error("Bạn nhập sai player. Xin mời nhập lại.");
+			}
+			else {
+				Error("Bạn nhập sai thông tin. Xin mời nhập lại.");
 			}
 		}
 	}
@@ -47,9 +47,10 @@ public class GameSession extends GameHorse {
 			} catch (InterruptedException exc) {
 				System.out.println(exc);
 			}
+			
 			HorseFLAG = true;
-			int steps = die.getScores();
-			 //steps = Integer.parseInt(JOptionPane.showInputDialog(null, "Nhập steps: ", JOptionPane.INFORMATION_MESSAGE)); 
+			 int steps= dice.getScores();
+			 steps = Integer.parseInt(JOptionPane.showInputDialog(null, "Nhập steps: ", JOptionPane.INFORMATION_MESSAGE)); 
 			if(steps == 6){
 				turnBonus = ONE_BONUS;
 				graphic.drawXuatQuanButton(map, color);
