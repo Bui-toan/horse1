@@ -1,5 +1,9 @@
 package Horse;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import javax.swing.JOptionPane;
 
 public class GameSession extends GameHorse {
@@ -73,8 +77,38 @@ public class GameSession extends GameHorse {
 			
 			if(map.isWin()){
 				endGameFlag = true;
+				try {
+					saveFile(graphic.timeString,map.playerwin);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
+	}
+	public void saveFile(String time,int color) throws IOException {
+		String content="\nLịch sử trò chơi\n";
+		String file="E:\\baitapjava\\btl\\history.txt";
+		FileWriter fw=null;
+		BufferedWriter bw=null;
+		try {
+			fw=new FileWriter(file,true);
+			bw=new BufferedWriter(fw);
+			bw.write(content);
+			bw.write("Thời gian: "+time);
+			bw.write("\nNgười chơi "+ color+" chiến thắng.\n");
+			bw.write("-------------------------------------");
+			
+		}
+		catch(IOException e){
+			throw new RuntimeException(e);
+		}
+		finally {
+			if(bw != null) 
+			bw.close();
+			if(fw != null)
+			fw.close();
+			}
 	}
 
 	public static void main(String args[]) {
