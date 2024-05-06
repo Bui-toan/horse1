@@ -22,6 +22,7 @@ public class GameMap extends GameHorse {
 		}
 	}
     public int numberplayer() {
+    	JOptionPane.showMessageDialog(null,"Chào mừng bạn đến trò chơi của chúng tôi.");
     	int n;
     	while(true) {
     		 n=Integer.parseInt(JOptionPane.showInputDialog(null, "Nhập số người chơi (1/2/3/4) : ", JOptionPane.INFORMATION_MESSAGE)); 
@@ -119,10 +120,11 @@ public class GameMap extends GameHorse {
 
 		return true;
 	}
-	
+	int playerwin;
 	public boolean isWin() {
 		for (int i = 1; i <= numberPlayer; i++) {
 			if(player[i].isWin()){
+				playerwin=i;
 				Error("Player " + i + " is winner.");
 				return true;
 			}
@@ -131,4 +133,3 @@ public class GameMap extends GameHorse {
 		return false;
 	}
 }
-
