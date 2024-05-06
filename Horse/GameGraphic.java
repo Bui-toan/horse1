@@ -1,8 +1,12 @@
 package Horse;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 
 public class GameGraphic extends GameHorse{
@@ -302,28 +306,134 @@ public class GameGraphic extends GameHorse{
     	
  
     }
+	GameSession ses;
+    public void docfile() throws IOException {
+		StringBuilder st=new StringBuilder();
+		try {
+			BufferedReader br=new BufferedReader(new FileReader("E:\\baitapjava\\btl\\history.txt"));
+			String line;
+			while((line=br.readLine())!=null) {
+				st.append(line).append("\n");
+			}
+			br.close();
+		}catch(IOException e) {
+			throw new RuntimeException(e);
+				}
+		JOptionPane.showMessageDialog(null, st,"Lịch sử trò chơi",JOptionPane.INFORMATION_MESSAGE);
+	}
     public void drawhistory(){
-    	JPanel history=new JPanel();
-    	JLabel ls=new JLabel("  Lịch sử trò chơi  ");
+    	JPanel control2=new JPanel();
+    	JButton history=new JButton("Lịch sử trò chơi");
+    	JButton newgame=new JButton("Game mới");
+    	JButton rule=new JButton("Luật chơi");
+    	JButton exitgame=new JButton("Thoát game");
     	
-    	history.setLayout(new BorderLayout());
-    	JLabel time = new JLabel("Thời gian : ");
+    	control2.setLayout(new GridBagLayout());
+    	GridBagConstraints c =new GridBagConstraints();
+    	c.insets=new Insets(15, 15, 15, 15);
+    	c.gridx=0;
+    	c.gridy=0;
+    	control2.add(history,c);
+    	c.gridy=1;
+    	control2.add(rule,c);
+    	c.gridy=2;
+    	control2.add(newgame,c);
+    	c.gridy=3;
+    	control2.add(exitgame,c);
     	
-    	JLabel color= new JLabel("Người chơi màu ");
     	
     	
+    	Font font=new Font("Arrial",Font.BOLD,16);
+    	history.setFont(font);
+    	rule.setFont(font);
+    	exitgame.setFont(font);
+    	newgame.setFont(font);
     	
-    	Font font=new Font("Arrial",Font.BOLD,20);
-    	ls.setFont(font);
+    	history.setBackground(Color.LIGHT_GRAY);
+    	rule.setBackground(Color.LIGHT_GRAY);
+    	newgame.setBackground(Color.LIGHT_GRAY);
+    	exitgame.setBackground(Color.LIGHT_GRAY);
     	
-    	history.add(ls,BorderLayout.NORTH);
-    	history.add(time,BorderLayout.CENTER);
-    	history.add(color,BorderLayout.SOUTH);
-    	history.setPreferredSize(new Dimension(200,50));
-    	controlPanel.add(history,BorderLayout.CENTER);
+    	history.addMouseListener(new MouseAdapter() {
+    		@Override
+    		public void mouseClicked(MouseEvent e) {
+				try {
+					docfile();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+    		
+    		
+		});
+    	rule.addMouseListener(new MouseAdapter() {
+    		@Override
+    		public void mouseClicked(MouseEvent e) {
+				showrule();
+			}
+    		
+    		
+		});
+    	newgame.addMouseListener(new MouseAdapter() {
+    		@Override
+    		public void mouseClicked(MouseEvent e) {
+				newGame();
+			}
+    		
+    		
+		});
+    	exitgame.addMouseListener(new MouseAdapter() {
+    		@Override
+    		public void mouseClicked(MouseEvent e) {
+				exitGame();
+			}
+	
+		});
+    	
+    	controlPanel.add(control2);
     	mainFrame.setVisible(true);
     	
-    	
+    }
+    
+    public void showrule() {	
+            JPanel instructionPanel = new JPanel() ;
+            instructionPanel.setLayout(new BorderLayout());           
+            JTextArea instructionText = new JTextArea(30,30);
+               instructionText.setEditable(false);
+               instructionText.setLineWrap(true);
+               instructionText.setWrapStyleWord(true);
+               instructionText.setText(" + Cờ cá ngựa là một trò chơi có nguồn gốc từ Ấn Độ, được biết đến dưới tên Pachisi. Sau đó, trò chơi này được mang đến Mỹ và được biến thể thành Parcheesi. Ở Việt Nam, trò chơi này được gọi là Cờ cá ngựa.\r\n"
+               		+ "\r\n"
+               		+ "+ Trò chơi gồm 4 màu đại diện cho 4 người chơi: xanh biển, đỏ, xanh lá, và vàng. Mỗi người chơi có 4 quân cờ và một xúc sắc có 6 mặt từ 1 đến 6.\r\n"
+               		+ "\r\n"
+               		+ "+ Điều kiện thắng là người chơi phải đưa tất cả 4 quân cờ của mình về chuồng theo thứ tự 6, 5, 4, 3 để trở thành người chiến thắng.\r\n"
+               		+ "\r\n"
+               		+ "+ Luật chơi bao gồm việc tung xúc sắc đến khi ra mặt “6” mới được xuất quân và di chuyển quân. Bạn có thể chọn giữa việc xuất quân ra chuồng hoặc đi một con khác nếu có. Nếu không xuất quân được, bạn có thể bỏ lượt.\r\n"
+               		+ "\r\n"
+               		+ "+ Khi di chuyển, nếu điểm đến có quân cờ của đối thủ, bạn có thể đá quân đó về chuồng của đối thủ. Nếu điểm đến có quân của bạn, bạn không thể đi tiếp.\r\n"
+               		+ "\r\n"
+               		+ "+ Mẹo chơi gồm cố gắng xuất quân nhiều nhất có thể và di chuyển khéo léo đến đích. Đồng thời, phá quân đối thủ bằng cách đá quân của họ về chuồng của họ để đảm bảo chiến thắng.");
+
+        JScrollPane scrollPane = new JScrollPane(instructionText);
+        instructionPanel.add(scrollPane, BorderLayout.CENTER);
+
+        JOptionPane.showMessageDialog(null, instructionPanel, "Hướng dẫn luật chơi cờ cá ngựa", JOptionPane.INFORMATION_MESSAGE);
+    }
+    public void newGame() {
+    	 int option = JOptionPane.showConfirmDialog(null, "Bạn có muốn chơi game mới  không?", "Trò chơi mới", JOptionPane.YES_NO_OPTION);
+         if (option == JOptionPane.YES_OPTION) {
+        	 	if(mainFrame!=null) {
+        	 		mainFrame.dispose(); 		
+        	 	}
+        	 	ses=new GameSession();
+     
+         }
+    }
+    public void exitGame() {
+        int option = JOptionPane.showConfirmDialog(null, "Bạn có muốn thoát khỏi trò chơi không?", "Thoát trò chơi", JOptionPane.YES_NO_OPTION);
+        if (option == JOptionPane.YES_OPTION) {
+            System.exit(0); 
+        }
     }
 	public void drawControl(RandomDice dice) {
 		controlPanel=new JPanel();
