@@ -174,12 +174,12 @@ public class GameGraphic extends GameHorse{
 		control.add(throwButton);
 		mainFrame.setVisible(true);
 	}
-	
+	String timeString = "";
 	public void drawTime() {
 		class DigitalWatch implements Runnable {
 			Thread thread = null;
 			Date startTime = null;
-			String timeString = "";
+			
 			JButton button;
 			
 
@@ -285,9 +285,13 @@ public class GameGraphic extends GameHorse{
 
 
 	public void drawname() {
-        JPanel jp2=new JPanel();
-    	JLabel name= new JLabel("  Chúc các bạn chơi game vui vẻ!");
-    	Font font=new Font("Arrial",Font.BOLD,15);
+		JPanel jp2=new JPanel();
+        JTextArea name= new JTextArea();
+        name.setText("  Chúc các bạn \n     chơi game \n         vui vẻ!");
+        name.setEditable(false);
+    	name.setLineWrap(true);
+    	name.setWrapStyleWord(true);
+    	Font font=new Font("Arrial",Font.BOLD,24);
     	name.setFont(font);
     	name.setForeground(Color.RED);
     	jp2.add(name);
@@ -371,4 +375,4 @@ public class GameGraphic extends GameHorse{
 		mainFrame.setVisible(true);
 		
 	}
-
+}
