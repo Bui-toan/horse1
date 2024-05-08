@@ -276,7 +276,7 @@ public class GameGraphic extends GameHorse{
 
 	public void removeXuatQuanButton() {
 		if (xuatQuanButton != null) {
-			controlPanel.remove(xuatQuanButton);
+			control.remove(xuatQuanButton);
 			xuatQuanButton = null;
 		}
 	}
