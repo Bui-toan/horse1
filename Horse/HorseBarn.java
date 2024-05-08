@@ -1,7 +1,7 @@
 package Horse;
 
 public class HorseBarn extends GameHorse {
-      private int NumberHorse; //so ngựa trong chuồng
+      private int NumberHorse=0; //so ngựa trong chuồng
       static final int No_Horse=-1;
       private boolean id[]=new boolean [Player.Horse]; //vị trí cá ngựa trong chuồng
       
@@ -19,25 +19,19 @@ public class HorseBarn extends GameHorse {
     	  if(isEmpty()) {
     		  return No_Horse;
     	  }
-    	  else {
+    	  
     		  for(int i=0;i<Player.Horse;i++) {
     			  if(id[i]=true) {
     				  return i;
     			  }
     		  }
-    	  }
+    	  
     	  return No_Horse;
       }
       public void remove(int id) {// xóa ngựa khỏi chuồng
     	  NumberHorse--;
     	  this.id[id]=false;
       }
-      public boolean isEmpty() {
-    	  return NumberHorse==0;
-      }
-}
-
-
       public boolean isEmpty() {
     	  return NumberHorse==0;
       }
