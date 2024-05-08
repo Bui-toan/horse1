@@ -25,7 +25,7 @@ public class Player extends GameHorse {
   	public void removeMouseListener(){
   		for(int i = 0; i < Horse; i++){
   			if(horse[i] != null){
-  				horse[i].RemoveMouseListener();
+  				horse[i].removeMouseListener();
   			}	
   		}
   	}
