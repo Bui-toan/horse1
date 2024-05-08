@@ -3,6 +3,7 @@ package Horse;
 import javax.swing.JOptionPane;
 
 public class GameMap extends GameHorse {
+	
 	private Player player[];
 	private final int map[] = new int[NUMBER_NODE];
 
@@ -14,15 +15,15 @@ public class GameMap extends GameHorse {
 	private int numberPlayer;
 
 	GameMap() {
-		numberPlayer = numberplayer();
+		numberPlayer = songuoichoi();
 		player = new Player[numberPlayer + 1];
 
 		for (int color = 1; color <= numberPlayer; color++) {
 			player[color] = new Player(color);
 		}
 	}
-    public int numberplayer() {
-    	JOptionPane.showMessageDialog(null,"Chào mừng bạn đến trò chơi của chúng tôi.");
+    public int songuoichoi() {
+    	 JOptionPane.showMessageDialog(null,"Chào mừng bạn đến trò chơi của chúng tôi.");
     	int n;
     	while(true) {
     		 n=Integer.parseInt(JOptionPane.showInputDialog(null, "Nhập số người chơi (1/2/3/4) : ", JOptionPane.INFORMATION_MESSAGE)); 
@@ -50,7 +51,7 @@ public class GameMap extends GameHorse {
 		int idHorse = player[color].horsebarn.getHorse();
 		
 		// kiểm tra xem còn quân nào ở chuồng để xuất hay không
-		if (idHorse == HorseBarn.No_Horse) {
+		if (idHorse == HorseBarn.NO_HORSE) {
 			return false;
 		}
         // nếu có quân ở chỗ xuất quân thì đá 
@@ -74,7 +75,7 @@ public class GameMap extends GameHorse {
 	public boolean setMap(int color, int idHorse, int start, int steps) {
 		/* Quân cờ đang ở đích đến cuối cùng */
 		if (start == DES[color]) {
-			if (player[color].des.setdes(Des.No_Rank, steps, player[color].horse[idHorse])) {
+			if (player[color].des.setDestination(Des.NO_RANK, steps, player[color].horse[idHorse])) {
 				player[color].horse[idHorse].toFinish();
 				map[start] = NO_HORSE;
 				return true;
@@ -95,7 +96,7 @@ public class GameMap extends GameHorse {
 				return false;
 			}
 		}
-		/* Tính toán vị trí đến */
+		
 		int pos = (start + steps) % NUMBER_NODE;
 
 		if (map[pos] == NO_HORSE) {
@@ -132,4 +133,5 @@ public class GameMap extends GameHorse {
 
 		return false;
 	}
+
 }
