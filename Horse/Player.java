@@ -34,9 +34,3 @@ public class Player extends GameHorse {
   		return des.isWin();
   	}
   }
-
-
-  	public  boolean isWin(){
-  		return des.isWin();
-  	}
-  }
