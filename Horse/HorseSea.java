@@ -102,9 +102,3 @@ public class HorseSea extends GameHorse {
     
 }
 
-
-    
-}
-
-    
-}
