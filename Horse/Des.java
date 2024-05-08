@@ -4,8 +4,8 @@ public class Des extends GameHorse {
 	static final int NO_RANK = -1;
 	static final int NUMBER_RANK = 6;
 	static final int NO_HORSE = -1;
-	private int peek = NUMBER_RANK - 1;// max rank
-	private int rank[] = new int[NUMBER_RANK]; // Vị trí cá ngựa trên bảng phong thần trên màn hình.
+	private int MaxRank = NUMBER_RANK - 1;// max rank
+	private int rank[] = new int[NUMBER_RANK]; 
 
 	Des(int color) {
 		for(int i = 0; i < NUMBER_RANK; i++){
@@ -14,7 +14,7 @@ public class Des extends GameHorse {
 	}
 
 	public boolean isWin() {
-		return peek == 1;
+		return MaxRank == 1;
 	}
 
 	public int getRank(int rank){
@@ -24,7 +24,7 @@ public class Des extends GameHorse {
 	public boolean setDestination(int rank, int newRank, HorseSea horse) {
 		newRank--;
 		// bậc rank cao nhất là 6
-		if (newRank > peek) {
+		if (newRank > MaxRank) {
 			Error("Không thể thăng hạng quân này.");
 			return false;
 		}
@@ -49,8 +49,8 @@ public class Des extends GameHorse {
 			}
 		}
 
-		if (this.rank[peek] != NO_HORSE) {
-			peek--;
+		if (this.rank[MaxRank] != NO_HORSE) {
+			MaxRank--;
 		}
 		return true;
 	}
