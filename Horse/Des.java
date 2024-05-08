@@ -1,56 +1,57 @@
 package Horse;
-
 public class Des extends GameHorse {
-      static final int No_Rank=-1;
-      static final int Number_Rank=6;
-      static final int No_Horse =-1;
-      private int MaxRank =Number_Rank-1;// vị trí cao nhất vó ngựa trên bảng
-      private int rank[]= new int[Number_Rank];// vị trí cá ngựa trên màn hình
-      
-      Des(int color) {
-    	  for(int i=0;i<Number_Rank;i++) {
-    		  rank[i]=No_Horse;
-    	  }
-      } 
-      public int getRank(int rank) {
-    	  return this.rank[rank];
-      }
-      public boolean setdes(int rank,int newRank,HorseSea horse) {
-    	  newRank--;
-    	  if(newRank > MaxRank) {
-    		  Error("Không thể thăng hạng cho quân ngựa này!");
-    		  return false;
-    	  }
-    	  if(rank==No_Rank) {
-    		  for(int i=0;i<=newRank;i++) {
-    			  if(this.rank[i]!= No_Horse) {
-    				  Error("Không thể thăng hạng quân ngựa này!");
-    				  return false;
-    			  }
-    		   }
-    		  
-    		   this.rank[newRank]=horse.getID();
-    		   horse.setRank(newRank);
-    		  
-    	  }
-    	  else {// điều kiện thăng hạng
-    		  if(newRank - rank==1 && this.rank[newRank]==No_Horse) {
-    			 this.rank[newRank] =this.rank[rank];
-    			 horse.setRank(newRank);
-    			 this.rank[rank]=No_Horse;
-    		  }
-    		  else {
-    			  Error("Không thể thăng hạng quân ngựa này");
-    		  }
-    	  }
-    	  if(this.rank[MaxRank]!=No_Horse) {
-    		  MaxRank--;
-    	  }
-    	  return true;
-      }
-      public boolean isWin() {
-    	  return MaxRank==1;
-      }
-     
-}
+	/* Đích */
+	static final int NO_RANK = -1;
+	static final int NUMBER_RANK = 6;
+	static final int NO_HORSE = -1;
+	private int peek = NUMBER_RANK - 1;// max rank
+	private int rank[] = new int[NUMBER_RANK]; // Vị trí cá ngựa trên bảng phong thần trên màn hình.
 
+	Des(int color) {
+		for(int i = 0; i < NUMBER_RANK; i++){
+			rank[i] = NO_HORSE;
+		}
+	}
+
+	public boolean isWin() {
+		return peek == 1;
+	}
+
+	public int getRank(int rank){
+		return this.rank[rank];
+	}
+
+	public boolean setDestination(int rank, int newRank, HorseSea horse) {
+		newRank--;
+		// bậc rank cao nhất là 6
+		if (newRank > peek) {
+			Error("Không thể thăng hạng quân này.");
+			return false;
+		}
+		
+		if(rank == NO_RANK){
+			for (int i = 0; i <= newRank; i++) {
+				if (this.rank[i] != NO_HORSE) {
+					Error("Không thể thăng hạng quân này.");
+					return false;
+				}
+			}
+
+			this.rank[newRank] = horse.getId();
+			horse.setRank(newRank);
+		} else {// điều kiện để thăng hạng
+			if(newRank - rank == 1 && this.rank[newRank] == NO_HORSE){
+				this.rank[newRank] = this.rank[rank];
+				horse.setRank(newRank);
+				this.rank[rank] =NO_HORSE;
+			} else {
+				Error("Không thể thăng hạng quân này.");
+			}
+		}
+
+		if (this.rank[peek] != NO_HORSE) {
+			peek--;
+		}
+		return true;
+	}
+}
