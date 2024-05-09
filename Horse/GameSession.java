@@ -60,7 +60,7 @@ public class GameSession extends GameHorse {
 			
 			HorseFLAG = true;
 			 int steps= dice.getScores();
-			 steps = Integer.parseInt(JOptionPane.showInputDialog(null, "Nhập steps: ", JOptionPane.INFORMATION_MESSAGE)); 
+			 //steps = Integer.parseInt(JOptionPane.showInputDialog(null, "Nhập steps: ", JOptionPane.INFORMATION_MESSAGE)); 
 			if(steps == 6){
 				turnBonus = ONE_BONUS;
 				graphic.drawXuatQuanButton(map, color);
