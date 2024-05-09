@@ -1,10 +1,16 @@
 package Horse;
 
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
+
+import SQL.Information;
 
 public class GameSession extends GameHorse {
 	private final int ONE_BONUS = -1;
@@ -40,7 +46,7 @@ public class GameSession extends GameHorse {
 		}
 	}
 
-	public void playGame() {
+	public void playGame() throws SQLException {
 		while (!endGameFlag) {
 			int color = turn;
 			turnBonus = NO_BONUS;
@@ -83,35 +89,53 @@ public class GameSession extends GameHorse {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				Information.History(map.playerwin,graphic.timeString);
 			}
 		}
 	}
-	public void saveFile(String time,int color) throws IOException {
-		String content="\nLịch sử trò chơi\n";
-		String file="E:\\baitapjava\\btl\\history.txt";
-		FileWriter fw=null;
-		BufferedWriter bw=null;
-		try {
-			fw=new FileWriter(file,true);
-			bw=new BufferedWriter(fw);
-			bw.write(content);
-			bw.write("Thời gian: "+time);
-			bw.write("\nNgười chơi "+ color+" chiến thắng.\n");
-			bw.write("-------------------------------------");
-			
-		}
-		catch(IOException e){
-			throw new RuntimeException(e);
-		}
-		finally {
-			if(bw != null) 
-			bw.close();
-			if(fw != null)
-			fw.close();
-			}
-	}
+	 public void saveFile(String time, int color) throws IOException {
+	        String content = "\nLịch sử trò chơi\n";
+	        String filename = "history.txt";
+	        clearFile(filename); // Gọi hàm clearFile để xóa hết dữ liệu trong file
+	        FileWriter fw = null;
+	        BufferedWriter bw = null;
+	        try {
+	            File file = new File(filename);
+	            if (!file.exists()) {
+	                file.createNewFile(); // Tạo file mới nếu không tồn tại
+	            }
+	            clearFile(filename);
+	            fw = new FileWriter(file, true);
+	            bw = new BufferedWriter(fw);
+	            bw.write(content);
+	            bw.write("Thời gian: " + time);
+	            bw.write("\nNgười chơi " + color + " chiến thắng.\n");
+	            bw.write("-------------------------------------");
+	        } catch (IOException e) {
+	            throw new RuntimeException(e);
+	        } finally {
+	            try {
+	                if (bw != null)
+	                    bw.close();
+	                if (fw != null)
+	                    fw.close();
+	            } catch (IOException ex) {
+	                ex.printStackTrace();
+	            }
+	        }
+	    }
 
-	public static void main(String args[]) {
+	    // Phương thức clearFile để xóa hết dữ liệu trong file
+	    public void clearFile(String fileName) {
+	        try (PrintWriter writer = new PrintWriter(fileName)) {
+	            // Ghi dữ liệu trống vào file
+	            writer.print("");
+	        } catch (FileNotFoundException e) {
+	            throw new RuntimeException(e);
+	        }
+	    }
+
+	public static void main(String args[]) throws SQLException {
 		GameSession session = new GameSession();
 		session.playGame();
 	}
