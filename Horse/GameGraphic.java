@@ -452,10 +452,12 @@ public class GameGraphic extends GameHorse {
      
          }
     }
+  public static boolean isGameRunning = true;
     public void exitGame() {
         int option = JOptionPane.showConfirmDialog(null, "Bạn có muốn thoát khỏi trò chơi không?", "Thoát trò chơi", JOptionPane.YES_NO_OPTION);
         if (option == JOptionPane.YES_OPTION) {
             System.exit(0); 
+            isGameRunning=false;
         }
     }
 	
