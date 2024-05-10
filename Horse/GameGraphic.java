@@ -1,16 +1,10 @@
 package Horse;
 import javax.swing.*;
-
 import SQL.Information;
-
 import java.awt.*;
 import java.awt.event.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.*;
-
+import File.FileHorse;
 public class GameGraphic extends GameHorse {
 	/* Kích thước cửa sổ game */
 	static final int W_FRAME = 910;
@@ -304,36 +298,10 @@ public class GameGraphic extends GameHorse {
     	mainFrame.setVisible(true);   	
     }
     GameSession ses;
-    public void docfile() {
-        StringBuilder st = new StringBuilder();
-        BufferedReader br = null;
-        try {
-            File file = new File("history.txt");
-            if (!file.exists()) {
-                JOptionPane.showMessageDialog(null, "File không tồn tại", "Lỗi", JOptionPane.ERROR_MESSAGE);
-                return; // Thoát khỏi phương thức nếu file không tồn tại
-            }
-            br = new BufferedReader(new FileReader(file));
-            String line;
-            while ((line = br.readLine()) != null) {
-                st.append(line).append("\n");
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } finally {
-            try {
-                if (br != null)
-                    br.close();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }
-        JOptionPane.showMessageDialog(null, st.toString(), "Lịch sử trò chơi", JOptionPane.INFORMATION_MESSAGE);
-    }
+   
     public void drawhistory(){
     	JPanel control2=new JPanel();
     	JButton history=new JButton("Lịch sử trước");
-    	JButton newgame=new JButton("Game mới");
     	JButton rule=new JButton("Luật chơi");
     	JButton exitgame=new JButton("Thoát game");
     	JButton AllHistory= new JButton("Lịch sử nhanh nhất");
@@ -348,8 +316,6 @@ public class GameGraphic extends GameHorse {
     	c.gridy=2;
     	control2.add(rule,c);
     	c.gridy=3;
-    	control2.add(newgame,c);
-    	c.gridy=4;
     	control2.add(exitgame,c);
     	
     	
@@ -358,12 +324,9 @@ public class GameGraphic extends GameHorse {
     	AllHistory.setFont(font);
     	history.setFont(font);
     	rule.setFont(font);
-    	exitgame.setFont(font);
-    	newgame.setFont(font);
-    	
+    	exitgame.setFont(font);	
     	history.setBackground(Color.LIGHT_GRAY);
     	rule.setBackground(Color.LIGHT_GRAY);
-    	newgame.setBackground(Color.LIGHT_GRAY);
     	exitgame.setBackground(Color.LIGHT_GRAY);
     	AllHistory.setBackground(Color.LIGHT_GRAY);
     	AllHistory.addMouseListener(new MouseAdapter() {
@@ -375,7 +338,7 @@ public class GameGraphic extends GameHorse {
     	history.addMouseListener(new MouseAdapter() {
     		@Override
     		public void mouseClicked(MouseEvent e) {
-				docfile();
+				FileHorse.readfile();
 			}
     		
     		
@@ -384,14 +347,6 @@ public class GameGraphic extends GameHorse {
     		@Override
     		public void mouseClicked(MouseEvent e) {
 				showrule();
-			}
-    		
-    		
-		});
-    	newgame.addMouseListener(new MouseAdapter() {
-    		@Override
-    		public void mouseClicked(MouseEvent e) {
-				newGame();
 			}
     		
     		
@@ -452,7 +407,7 @@ public class GameGraphic extends GameHorse {
      
          }
     }
-  public static boolean isGameRunning = true;
+    public static boolean isGameRunning = true;
     public void exitGame() {
         int option = JOptionPane.showConfirmDialog(null, "Bạn có muốn thoát khỏi trò chơi không?", "Thoát trò chơi", JOptionPane.YES_NO_OPTION);
         if (option == JOptionPane.YES_OPTION) {
