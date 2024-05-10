@@ -66,6 +66,14 @@ public class Information {
 	            e.printStackTrace();
 	        }
 	    }
-        
+         public static void closeConnection() {
+	    	  try {
+	    		  if(connection!=null) {
+	    			  connection.close();
+	    		  }
+	    	  }catch(Exception e){
+	    		  e.printStackTrace();
+	    	  }
+	       }  
 	}
 
