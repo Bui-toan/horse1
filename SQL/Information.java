@@ -10,26 +10,18 @@ public class Information {
 	        // Thêm dữ liệu vào bản
 	       String insertSql = "INSERT INTO `horse`.`horse2` (`time`, `color`) VALUES ('" + time1 + "', " + color1 + ")";
 	        try (Statement statement = connection.createStatement()) {
-	            int rowsAffected = statement.executeUpdate(insertSql);
-	            System.out.println("Số dòng đã thêm: " + rowsAffected);
-	            if (rowsAffected > 0) {
-	                System.out.println("Thêm dữ liệu thành công");
-	            } else {
-	                System.out.println("Thêm dữ liệu thất bại");
-	            }
+                 statement.executeUpdate(insertSql);
 	        } catch (SQLException e) {
 	            e.printStackTrace();
 	        }
 
 	        // Kiểm tra số lượng cột hiện tại
 	        int currentColumnCount = getRowCount(connection, tableName);
-	        System.out.println("Số cột hiện tại: " + currentColumnCount);
 
 	        // Nếu số lượng cột vượt quá MAX_COLUMN, loại bỏ cột cũ nhất
 	        if (currentColumnCount > MAX_COLUMN) {
 	            deleteOldestRow(connection, tableName);
 	        }
-	       
 	    }
         public static void foundHistory(String time[], Integer[] color) {
         	int i=0;
@@ -69,18 +61,11 @@ public class Information {
 	    public static void deleteOldestRow(Connection connection, String tableName) throws SQLException {
 	        String deleteQuery = "DELETE FROM " + tableName + " WHERE time = (SELECT MAX(time) FROM " + tableName + ")";
 	        try (Statement statement = connection.createStatement()) {
-	            int rowsAffected = statement.executeUpdate(deleteQuery);
-	            System.out.println("Số dòng đã xóa: " + rowsAffected);
-	            if (rowsAffected > 0) {
-	                System.out.println("Xóa dòng đầu tiên thành công");
-	            } else {
-	                System.out.println("Không có dòng nào được xóa");
-	            }
+	            statement.executeUpdate(deleteQuery);
 	        } catch (SQLException e) {
 	            e.printStackTrace();
 	        }
 	    }
         
 	}
-
 
