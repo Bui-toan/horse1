@@ -1,17 +1,14 @@
 package SQL;
 
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+
 public class Information {
 	 public static final int MAX_COLUMN = 5;
 	 public static String tableName = "horse2";
 	 public static Connection connection = Connect.getConnection();
 	 public static  void History(int color1, String time1) throws SQLException {
 	        // Thêm dữ liệu vào bản
-	        String insertSql = "INSERT INTO `horse`.`horse2` (`time`, `color`) VALUES ('" + time1 + "', " + color1 + ")";
+	       String insertSql = "INSERT INTO `horse`.`horse2` (`time`, `color`) VALUES ('" + time1 + "', " + color1 + ")";
 	        try (Statement statement = connection.createStatement()) {
 	            int rowsAffected = statement.executeUpdate(insertSql);
 	            System.out.println("Số dòng đã thêm: " + rowsAffected);
@@ -32,9 +29,7 @@ public class Information {
 	        if (currentColumnCount > MAX_COLUMN) {
 	            deleteOldestRow(connection, tableName);
 	        }
-
-	        // Đóng kết nối
-	        Connect.closeConnection(connection);
+	       
 	    }
         public static void foundHistory(String time[], Integer[] color) {
         	int i=0;
@@ -87,4 +82,5 @@ public class Information {
 	    }
         
 	}
+
 
