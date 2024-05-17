@@ -320,7 +320,7 @@ public class GameGraphic extends GameHorse {
     	
     	
     	
-    	Font font=new Font("Arrial",Font.BOLD,16);
+    	Font font=new Font("Arrial",Font.ITALIC,16);
     	AllHistory.setFont(font);
     	history.setFont(font);
     	rule.setFont(font);
@@ -396,16 +396,6 @@ public class GameGraphic extends GameHorse {
         instructionPanel.add(scrollPane, BorderLayout.CENTER);
 
         JOptionPane.showMessageDialog(null, instructionPanel, "Hướng dẫn luật chơi cờ cá ngựa", JOptionPane.INFORMATION_MESSAGE);
-    }
-    public void newGame() {
-    	 int option = JOptionPane.showConfirmDialog(null, "Bạn có muốn chơi game mới  không?", "Trò chơi mới", JOptionPane.YES_NO_OPTION);
-         if (option == JOptionPane.YES_OPTION) {
-        	 	if(mainFrame!=null) {
-        	 		mainFrame.dispose(); 		
-        	 	}
-        	 	ses=new GameSession();
-     
-         }
     }
     public static boolean isGameRunning = true;
     public void exitGame() {
